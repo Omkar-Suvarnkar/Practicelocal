@@ -1,0 +1,31 @@
+name: practicelocal
+recipe: drupal8
+config:
+ php: '7.3'
+ via: nginx
+ webroot: web
+ drush: 9
+ xdebug: true
+proxy:
+ pma:
+   - pma.practicelocal.lndo.site
+ mailhog:
+   - mail.practicelocal.lndo.site
+services:
+ appserver:
+   build:
+     - composer install
+ pma:
+   type: phpmyadmin
+   hosts:
+     - database
+ mailhog:
+   type: mailhog
+   hogfrom:
+     - appserver
+ database:
+   type: mysql:5.7
+   creds:
+     user: practicelocal
+     password: practicelocal
+     database: practicelocal
